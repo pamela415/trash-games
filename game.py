@@ -1,19 +1,11 @@
 import pygame
 import random
 import time
+from backdrop import Backdrop
 
 FPS = 50
 WIDTH, HEIGHT = 800, 600
 TOTAL_TRASH = 50
-
-class Backdrop(pygame.sprite.Sprite):
-    """Coral reef backdrop"""
-    def __init__(self):
-        super().__init__()
-
-        self.image = pygame.image.load("assets/coralreef.jpg")
-
-        self.rect = self.image.get_rect()
 
 
 class Trash(pygame.sprite.Sprite):
@@ -52,7 +44,7 @@ class Game():
 
         self.score = 0
 
-        self.count_down = 3200
+        self.count_down = 1200
 
         self.backdrop = Backdrop()
 
