@@ -52,7 +52,7 @@ class Game():
 
         self.score = 0
 
-        self.count_down = 4500
+        self.count_down = 3200
 
         self.backdrop = Backdrop()
 
