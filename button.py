@@ -7,8 +7,11 @@ class Button(pygame.sprite.Sprite):
         super().__init__()
 
         self.images = {}
-        self.images["start"] = pygame.image.load(
+        self.images[START_BUTTON] = pygame.image.load(
             "assets/start_button.png"
+        )
+        self.images[INSTRUCTIONS_BUTTON] = pygame.image.load(
+            "assets/instructions_button.png"
         )
         self.image = self.images[button_type]
 

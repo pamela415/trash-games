@@ -29,12 +29,15 @@ class Game():
         self.backdrops = pygame.sprite.Group()
         self.backdrops.add(self.backdrop)
 
-        self.start_button = Button("start")
+        self.start_button = Button(START_BUTTON)
+        self.start_button.set_pos(WIDTH / 2, HEIGHT / 2 - 30)
 
-        self.start_button.set_pos(WIDTH / 2, HEIGHT / 2 + 30)
+        self.instructions_button = Button(INSTRUCTIONS_BUTTON)
+        self.instructions_button.set_pos(WIDTH / 2, HEIGHT / 2 + 30)
 
         self.beginning_buttons = pygame.sprite.Group()
         self.beginning_buttons.add(self.start_button)
+        self.beginning_buttons.add(self.instructions_button)
 
         self.trash_types = ["bag", "bottle"]
         self.trash_pieces = pygame.sprite.Group()
@@ -111,7 +114,6 @@ class Game():
                 if self.game_section == START:
                     for button in self.beginning_buttons:
                         if button.rect.collidepoint(pos):
-                            print(button.button_type)
                 elif self.game_section == PLAY:
                     for trash_piece in self.trash_pieces:
                         if trash_piece.rect.collidepoint(pos):

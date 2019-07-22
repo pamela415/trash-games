@@ -5,3 +5,6 @@ PLAY = "play"
 START = "start"
 PASSED = "passed"
 FAILED = "failed"
+
+START_BUTTON = "start_button"
+INSTRUCTIONS_BUTTON = "instructions_button"
