@@ -4,6 +4,7 @@ import time
 from backdrop import Backdrop
 from trash import Trash
 from constants import *
+from button import Button
 
 
 class Game():
@@ -17,14 +18,23 @@ class Game():
 
         self.running = True
 
+        self.game_section = START
+
         self.score = 0
 
-        self.count_down = 1200
+        self.count_down = 1000
 
         self.backdrop = Backdrop()
 
-        self.sprites = pygame.sprite.Group()
-        self.sprites.add(self.backdrop)
+        self.backdrops = pygame.sprite.Group()
+        self.backdrops.add(self.backdrop)
+
+        self.start_button = Button("start")
+
+        self.start_button.set_pos(WIDTH / 2, HEIGHT / 2 + 30)
+
+        self.beginning_buttons = pygame.sprite.Group()
+        self.beginning_buttons.add(self.start_button)
 
         self.trash_types = ["bag", "bottle"]
         self.trash_pieces = pygame.sprite.Group()
@@ -60,15 +70,29 @@ class Game():
 
         self.handle_input()
 
-        self.check_status()
+        if self.game_section == START:
+            self.backdrops.update()
+            self.backdrops.draw(self.screen)
+            
+            self.beginning_buttons.update()
+            self.beginning_buttons.draw(self.screen)
 
-        self.sprites.update()
-        self.sprites.draw(self.screen)
+        elif self.game_section == PLAY:
+            self.check_status()
 
-        self.trash_pieces.update()
-        self.trash_pieces.draw(self.screen)
+            self.backdrops.update()
+            self.backdrops.draw(self.screen)
 
-        self.draw_text(self.screen, str(self.score), 48, WIDTH / 2, 10)
+            self.trash_pieces.update()
+            self.trash_pieces.draw(self.screen)
+
+            self.draw_text(self.screen, str(self.score), 48, WIDTH / 2, 10)
+        elif self.game_section == PASSED:
+            self.backdrops.update()
+            self.backdrops.draw(self.screen)
+        elif self.game_section == FAILED:
+            self.backdrops.update()
+            self.backdrops.draw(self.screen)
 
         pygame.display.flip()
 
@@ -83,11 +107,21 @@ class Game():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
 
-                for trash_piece in self.trash_pieces:
-                    if trash_piece.rect.collidepoint(pos):
-                        self.score += 1
-                        self.trash_pieces.remove(trash_piece)
-                        print(self.score)
+
+                if self.game_section == START:
+                    for button in self.beginning_buttons:
+                        if button.rect.collidepoint(pos):
+                            print(button.button_type)
+                elif self.game_section == PLAY:
+                    for trash_piece in self.trash_pieces:
+                        if trash_piece.rect.collidepoint(pos):
+                            self.score += 1
+                            self.trash_pieces.remove(trash_piece)
+                            print(self.score)
+                elif self.game_section == PASSED:
+                    pass
+                elif self.game_section == FAILED:
+                    pass
     
     
 
