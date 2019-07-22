@@ -22,7 +22,7 @@ class Game():
 
         self.score = 0
 
-        self.count_down = 1000
+        self.count_down = 240
 
         self.backdrop = Backdrop()
 
@@ -110,10 +110,13 @@ class Game():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
 
-
                 if self.game_section == START:
                     for button in self.beginning_buttons:
                         if button.rect.collidepoint(pos):
+                            if button.button_type == START_BUTTON:
+                                self.game_section = PLAY
+                            elif button.button_type == INSTRUCTIONS_BUTTON:
+                                print("hi")
                 elif self.game_section == PLAY:
                     for trash_piece in self.trash_pieces:
                         if trash_piece.rect.collidepoint(pos):
