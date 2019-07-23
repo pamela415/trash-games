@@ -22,7 +22,7 @@ class Game():
 
         self.score = 0
 
-        self.count_down = 240
+        self.count_down = COUNT_DOWN
 
         self.backdrop = Backdrop()
 
@@ -39,14 +39,29 @@ class Game():
         self.beginning_buttons.add(self.start_button)
         self.beginning_buttons.add(self.instructions_button)
 
+        self.play_again = Button(PLAY_AGAIN)
+        self.play_again.set_pos(WIDTH / 2, HEIGHT / 2)
+
+        self.end_buttons = pygame.sprite.Group()
+        self.end_buttons.add(self.play_again)
+
         self.trash_types = ["bag", "bottle"]
         self.trash_pieces = pygame.sprite.Group()
+
+        self.restart_game()
+
+    def restart_game(self):
+        self.score = 0
+        self.count_down = COUNT_DOWN
+
+        self.trash_pieces.empty()
+
+        print("Restart")
 
         for x in range(50):
             trash_piece = Trash(random.choice(self.trash_types))
             self.trash_pieces.add(trash_piece)
-    
-    
+
     def draw_text(self, surf, text, size, x, y):
         font = pygame.font.Font(self.font_name, size)
         text_surface = font.render(text, True,(250,250,250))
@@ -57,16 +72,10 @@ class Game():
     def check_status(self):
         self.count_down -= 1
 
-        print(self.count_down)
-
         if self.score == 50:
-            print("Good Job")
-            self.running = False
+            self.game_section = PASSED
         elif self.count_down == 0:
-            print("try again")
-            self.running = False
-
-
+            self.game_section = FAILED
 
     def update(self):
         self.clock.tick(FPS)
@@ -90,12 +99,24 @@ class Game():
             self.trash_pieces.draw(self.screen)
 
             self.draw_text(self.screen, str(self.score), 48, WIDTH / 2, 10)
+
+        elif self.game_section == INSTRUCTIONS:
+            self.backdrops.update()
+            self.backdrops.draw(self.screen)
+
         elif self.game_section == PASSED:
             self.backdrops.update()
             self.backdrops.draw(self.screen)
+
+            self.end_buttons.update()
+            self.end_buttons.draw(self.screen)
+
         elif self.game_section == FAILED:
             self.backdrops.update()
             self.backdrops.draw(self.screen)
+
+            self.end_buttons.update()
+            self.end_buttons.draw(self.screen)
 
         pygame.display.flip()
 
@@ -104,9 +125,11 @@ class Game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+                
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
 
@@ -116,17 +139,27 @@ class Game():
                             if button.button_type == START_BUTTON:
                                 self.game_section = PLAY
                             elif button.button_type == INSTRUCTIONS_BUTTON:
-                                print("hi")
+                                print("hi") 
+
                 elif self.game_section == PLAY:
                     for trash_piece in self.trash_pieces:
                         if trash_piece.rect.collidepoint(pos):
                             self.score += 1
                             self.trash_pieces.remove(trash_piece)
-                            print(self.score)
+                            
                 elif self.game_section == PASSED:
-                    pass
+                    for button in self.end_buttons:
+                        if button.rect.collidepoint(pos):
+                            if button.button_type == PLAY_AGAIN:
+                                self.restart_game()
+                                self.game_section = PLAY
+
                 elif self.game_section == FAILED:
-                    pass
+                    for button in self.end_buttons:
+                        if button.rect.collidepoint(pos):
+                            if button.button_type == PLAY_AGAIN:
+                                self.restart_game()
+                                self.game_section = PLAY
     
     
 

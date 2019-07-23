@@ -13,6 +13,9 @@ class Button(pygame.sprite.Sprite):
         self.images[INSTRUCTIONS_BUTTON] = pygame.image.load(
             "assets/instructions_button.png"
         )
+        self.images[PLAY_AGAIN] = pygame.image.load(
+            "assets/play_again.png"
+        )
         self.image = self.images[button_type]
 
         self.rect = self.image.get_rect()
