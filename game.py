@@ -40,7 +40,7 @@ class Game():
         self.beginning_buttons.add(self.instructions_button)
 
         self.play_again = Button(PLAY_AGAIN)
-        self.play_again.set_pos(WIDTH / 2, HEIGHT / 2)
+        self.play_again.set_pos(WIDTH / 2, HEIGHT / 2 + 200)
 
         self.end_buttons = pygame.sprite.Group()
         self.end_buttons.add(self.play_again)
@@ -68,6 +68,16 @@ class Game():
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
         surf.blit(text_surface, text_rect)
+
+    # def text_objects(self, text, font):
+    #     textSurface = font.render(text, True, black)
+    #     return textSurface, textSurface.get_rect()
+
+    # def message_display(self, text):
+    #     largeText = pygame.font.Font('freesansbold.ttf',115)
+    #     TextSurf, TextRect = text_objects(text, largeText)
+    #     # TextRect.center = ((display_width/2),(display_height/2))
+    #     # gameDisplay.blit(TextSurf, TextRect)
 
     def check_status(self):
         self.count_down -= 1
@@ -139,8 +149,12 @@ class Game():
                             if button.button_type == START_BUTTON:
                                 self.game_section = PLAY
                             elif button.button_type == INSTRUCTIONS_BUTTON:
+                                self.game_section = INSTRUCTIONS
                                 print("hi") 
 
+                elif self.game_section == INSTRUCTIONS:
+                    pass
+                    
                 elif self.game_section == PLAY:
                     for trash_piece in self.trash_pieces:
                         if trash_piece.rect.collidepoint(pos):

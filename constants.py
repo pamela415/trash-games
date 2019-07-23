@@ -6,7 +6,8 @@ START = "start"
 PASSED = "passed"
 FAILED = "failed"
 INSTRUCTIONS = "instructions"
-COUNT_DOWN = 2400
+COUNT_DOWN = 240
+WHITE = (255, 255, 255)
 
 START_BUTTON = "start_button"
 INSTRUCTIONS_BUTTON = "instructions_button"
