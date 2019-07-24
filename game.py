@@ -24,6 +24,8 @@ class Game():
 
         self.count_down = COUNT_DOWN
 
+        # BACKDROPS
+
         self.backdrops = pygame.sprite.Group()
         self.instructions_backdrops = pygame.sprite.Group()
 
@@ -32,6 +34,8 @@ class Game():
 
         self.instructions_backdrop = Backdrop(INSTRUCTIONS_BACKDROP)
         self.instructions_backdrops.add(self.instructions_backdrop)
+
+        # BUTTONS
 
         self.start_button = Button(START_BUTTON)
         self.start_button.set_pos(WIDTH / 2, HEIGHT / 2 - 30)
@@ -49,6 +53,8 @@ class Game():
         self.end_buttons = pygame.sprite.Group()
         self.end_buttons.add(self.play_again)
 
+        # TRASH
+
         self.trash_types = ["bag", "bottle"]
         self.trash_pieces = pygame.sprite.Group()
 
@@ -65,6 +71,8 @@ class Game():
         for x in range(50):
             trash_piece = Trash(random.choice(self.trash_types))
             self.trash_pieces.add(trash_piece)
+
+    # DISPLAYED SCORE
 
     def draw_text(self, surf, text, size, x, y):
         font = pygame.font.Font(self.font_name, size)
@@ -85,6 +93,8 @@ class Game():
         self.clock.tick(FPS)
 
         self.handle_input()
+
+    #DESCRIPTION OF GAME SECTIONS
 
         if self.game_section == START:
             self.backdrops.update()
@@ -127,6 +137,8 @@ class Game():
 
         pygame.display.flip()
 
+    # CONTROLS
+
     def handle_input(self):
         """Updates the input dictionary"""
         for event in pygame.event.get():
@@ -139,6 +151,8 @@ class Game():
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+
+    # WHEN GAME SECTION OCCURS
 
                 if self.game_section == START:
                     for button in self.beginning_buttons:
