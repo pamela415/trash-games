@@ -24,10 +24,14 @@ class Game():
 
         self.count_down = COUNT_DOWN
 
-        self.backdrop = Backdrop()
-
         self.backdrops = pygame.sprite.Group()
-        self.backdrops.add(self.backdrop)
+        self.instructions_backdrops = pygame.sprite.Group()
+
+        self.standard_backdrop = Backdrop(BACKDROP)
+        self.backdrops.add(self.standard_backdrop)
+
+        self.instructions_backdrop = Backdrop(INSTRUCTIONS_BACKDROP)
+        self.instructions_backdrops.add(self.instructions_backdrop)
 
         self.start_button = Button(START_BUTTON)
         self.start_button.set_pos(WIDTH / 2, HEIGHT / 2 - 30)
@@ -69,16 +73,6 @@ class Game():
         text_rect.midtop = (x, y)
         surf.blit(text_surface, text_rect)
 
-    # def text_objects(self, text, font):
-    #     textSurface = font.render(text, True, black)
-    #     return textSurface, textSurface.get_rect()
-
-    # def message_display(self, text):
-    #     largeText = pygame.font.Font('freesansbold.ttf',115)
-    #     TextSurf, TextRect = text_objects(text, largeText)
-    #     # TextRect.center = ((display_width/2),(display_height/2))
-    #     # gameDisplay.blit(TextSurf, TextRect)
-
     def check_status(self):
         self.count_down -= 1
 
@@ -111,8 +105,11 @@ class Game():
             self.draw_text(self.screen, str(self.score), 48, WIDTH / 2, 10)
 
         elif self.game_section == INSTRUCTIONS:
-            self.backdrops.update()
-            self.backdrops.draw(self.screen)
+            self.instructions_backdrops.update()
+            self.instructions_backdrops.draw(self.screen)
+
+            # self.beginning_buttons.update()
+            # self.beginning_buttons.draw(self.screen)
 
         elif self.game_section == PASSED:
             self.backdrops.update()
@@ -153,7 +150,8 @@ class Game():
                                 print("hi") 
 
                 elif self.game_section == INSTRUCTIONS:
-                    pass
+                    if button.button_type == START_BUTTON:
+                        self.game_section = PLAY
                     
                 elif self.game_section == PLAY:
                     for trash_piece in self.trash_pieces:
