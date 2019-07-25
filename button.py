@@ -16,12 +16,12 @@ class Button(pygame.sprite.Sprite):
         self.images[PLAY_AGAIN] = pygame.image.load(
             "assets/play_again.png"
         )
-        # self.images[HOME] = pygame.image.load(
-        #     "assets/home_button.png"
-        # )
-        # self.images[BACK] = pygame.image.load(
-        #      "assets/back_button.png"
-        # )
+        self.images[TITLE] = pygame.image.load(
+            "assets/title.png"
+        )
+        self.images[BACK] = pygame.image.load(
+             "assets/back_button.png"
+        )
         self.image = self.images[button_type]
 
         self.rect = self.image.get_rect()

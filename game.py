@@ -36,12 +36,11 @@ class Game():
         self.instructions_backdrops.add(self.instructions_backdrop)
 
         # BUTTONS
-
         self.start_button = Button(START_BUTTON)
-        self.start_button.set_pos(WIDTH / 2, HEIGHT / 2 - 30)
+        self.start_button.set_pos(WIDTH / 2, HEIGHT / 2 + 150)
 
         self.instructions_button = Button(INSTRUCTIONS_BUTTON)
-        self.instructions_button.set_pos(WIDTH / 2, HEIGHT / 2 + 30)
+        self.instructions_button.set_pos(WIDTH / 2, HEIGHT / 2 + 200)
 
         self.beginning_buttons = pygame.sprite.Group()
         self.beginning_buttons.add(self.start_button)
@@ -52,6 +51,18 @@ class Game():
 
         self.end_buttons = pygame.sprite.Group()
         self.end_buttons.add(self.play_again)
+
+        self.back_button = Button(BACK)
+        self.back_button.set_pos(WIDTH / 2, HEIGHT / 2 +150)
+
+        self.back_buttons = pygame.sprite.Group()
+        self.back_buttons.add(self.back_button)
+        
+        self.titles = Button(TITLE)
+        self.titles.set_pos(WIDTH / 2, HEIGHT / 2)
+
+        self.title_button = pygame.sprite.Group()
+        self.title_button.add(self.titles)
 
         # TRASH
 
@@ -99,6 +110,9 @@ class Game():
         if self.game_section == START:
             self.backdrops.update()
             self.backdrops.draw(self.screen)
+
+            self.title_button.update()
+            self.title_button.draw(self.screen)
             
             self.beginning_buttons.update()
             self.beginning_buttons.draw(self.screen)
@@ -112,14 +126,14 @@ class Game():
             self.trash_pieces.update()
             self.trash_pieces.draw(self.screen)
 
-            self.draw_text(self.screen, str(self.score), 48, WIDTH / 2, 10)
+            self.draw_text(self.screen, str(self.count_down // FPS), 90, WIDTH / 12 , 10)
 
         elif self.game_section == INSTRUCTIONS:
             self.instructions_backdrops.update()
             self.instructions_backdrops.draw(self.screen)
 
-            # self.beginning_buttons.update()
-            # self.beginning_buttons.draw(self.screen)
+            self.back_buttons.update()
+            self.back_buttons.draw(self.screen)
 
         elif self.game_section == PASSED:
             self.backdrops.update()
@@ -164,8 +178,11 @@ class Game():
                                 print("hi") 
 
                 elif self.game_section == INSTRUCTIONS:
-                    if button.button_type == START_BUTTON:
-                        self.game_section = PLAY
+                    for button in self.back_buttons:
+                        if button.rect.collidepoint(pos):
+
+                            if button.button_type == BACK:
+                                self.game_section = START
                     
                 elif self.game_section == PLAY:
                     for trash_piece in self.trash_pieces:
