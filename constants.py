@@ -12,7 +12,7 @@ INSTRUCTIONS_BACKDROP = "instructions_backdrop"
 BACKDROP = "standard_backdrop"
 
 TITLE = "titles"
-GAME_PASSED = "good_job"
+PASSED_SCREEN = "good_job"
 GAME_FAILED = "try_again"
 
 START_BUTTON = "start_button"

@@ -64,6 +64,18 @@ class Game():
         self.title_button = pygame.sprite.Group()
         self.title_button.add(self.titles)
 
+        self.good_job = Button(PASSED_SCREEN)
+        self.good_job.set_pos(WIDTH / 2, HEIGHT / 2)
+
+        self.game_passed = pygame.sprite.Group()
+        self.game_passed.add(self.good_job)
+
+        self.try_again = Button(GAME_FAILED)
+        self.try_again.set_pos(WIDTH / 2, HEIGHT / 2)
+
+        self.game_failed = pygame.sprite.Group()
+        self.game_failed.add(self.try_again)
+
         # TRASH
 
         self.trash_types = ["bag", "bottle"]
@@ -142,12 +154,18 @@ class Game():
             self.end_buttons.update()
             self.end_buttons.draw(self.screen)
 
+            self.game_passed.update()
+            self.game_passed.draw(self.screen)
+
         elif self.game_section == FAILED:
             self.backdrops.update()
             self.backdrops.draw(self.screen)
 
             self.end_buttons.update()
             self.end_buttons.draw(self.screen)
+
+            self.game_failed.update()
+            self.game_failed.draw(self.screen)
 
         pygame.display.flip()
 

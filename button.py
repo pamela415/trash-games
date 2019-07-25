@@ -20,7 +20,13 @@ class Button(pygame.sprite.Sprite):
             "assets/title.png"
         )
         self.images[BACK] = pygame.image.load(
-             "assets/back_button.png"
+            "assets/back_button.png"
+        )
+        self.images[PASSED_SCREEN] = pygame.image.load(
+            "assets/passed.png"
+        )
+        self.images[GAME_FAILED] = pygame.image.load(
+            "assets/failed.png"
         )
         self.image = self.images[button_type]
 
