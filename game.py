@@ -98,11 +98,28 @@ class Game():
     # DISPLAYED SCORE
 
     def draw_text(self, surf, text, size, x, y):
-        font = pygame.font.Font(self.font_name, size)
-        text_surface = font.render(text, True,(250,250,250))
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x, y)
-        surf.blit(text_surface, text_rect)
+        
+
+        if self.count_down > (11 * FPS):
+            font = pygame.font.Font(self.font_name, size)
+            text_surface = font.render(text, True,(250,250,250))
+            text_rect = text_surface.get_rect()
+            text_rect.midtop = (x, y)
+            surf.blit(text_surface, text_rect)
+
+        elif self.count_down <= (11 * FPS) and self.count_down > (4 * FPS):
+            font = pygame.font.Font(self.font_name, size)
+            text_surface = font.render(text, True,(255,255,0))
+            text_rect = text_surface.get_rect()
+            text_rect.midtop = (x, y)
+            surf.blit(text_surface, text_rect)
+
+        elif self.count_down <= (4 * FPS):
+            font = pygame.font.Font(self.font_name, size)
+            text_surface = font.render(text, True,(255,0,0))
+            text_rect = text_surface.get_rect()
+            text_rect.midtop = (x, y)
+            surf.blit(text_surface, text_rect)
 
     def check_status(self):
         self.count_down -= 1
